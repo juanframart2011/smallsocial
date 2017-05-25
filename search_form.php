@@ -61,7 +61,7 @@ for( $u = 0; $u < count( $list ); $u++ ){
 
     $html .= '<div class="col-md-3 text-center">
         <div class="widget-user-image">
-            <img id="image-profile" class="img-circle changeprofilephoto" width="128" height="128" src="'. $image .'">
+            <img class="img-circle" width="128" height="128" src="'. $image .'">
         </div>
         <h5>'. $list[$u]["nombre"] . ' ' . $list[$u]["apellido"] .'</h5>
         <h5>'. $list[$u]["email"] .'</h5>
