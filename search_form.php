@@ -59,13 +59,13 @@ for( $u = 0; $u < count( $list ); $u++ ){
 		$image = $list[$u]["ruta"];
 	}
 
-    $html .= '<div class="col-md-3 text-center">
+    $html .= '<a href="profile.php?'. $list[$u]["permanlink"] . '"><div class="col-md-3 text-center">
         <div class="widget-user-image">
             <img class="img-circle" width="128" height="128" src="'. $image .'">
         </div>
         <h5>'. $list[$u]["nombre"] . ' ' . $list[$u]["apellido"] .'</h5>
         <h5>'. $list[$u]["email"] .'</h5>
-    </div>';
+    </div></a>';
 }
 
 echo $html;
