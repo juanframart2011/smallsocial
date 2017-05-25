@@ -128,7 +128,7 @@
                                 $list = users_list();
                                 
                                 for( $u = 0; $u < count( $list ); $u++ ):?>
-                                    <a href="profile.php?'<?= $list[$u]["permanlink"] ?>"><div class="col-md-3 text-center">
+                                    <a href="<?= 'profile.php?' . $list[$u]["permalink"] ?>"><div class="col-md-3 text-center">
                                         <div class="widget-user-image">
                                             <img class="img-circle" width="128" height="128" src="<?= ( empty( $list[$u]["ruta"] ) )? 'images/profile-default.jpg' : $list[$u]["ruta"] ?>">
                                         </div>

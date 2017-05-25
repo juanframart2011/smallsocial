@@ -43,7 +43,7 @@ else{
 }
 
 
-$sql = 'SELECT u.nombre, u.apellido, u.email, img.ruta FROM '.SSPREFIX.'usuarios as u LEFT JOIN '.SSPREFIX.'imagespost as img on img.usuario = u.id WHERE u.rango = 1 ' . $sql_typeUser . $sql_gender . $sql_age . $sql_typeEquipo . ' order by registro';
+$sql = 'SELECT u.nombre, u.permalink, u.apellido, u.email, img.ruta FROM '.SSPREFIX.'usuarios as u LEFT JOIN '.SSPREFIX.'imagespost as img on img.usuario = u.id WHERE u.rango = 1 ' . $sql_typeUser . $sql_gender . $sql_age . $sql_typeEquipo . ' order by registro';
 
 $list = users_list( $sql );
 $html = '';
@@ -59,7 +59,7 @@ for( $u = 0; $u < count( $list ); $u++ ){
 		$image = $list[$u]["ruta"];
 	}
 
-    $html .= '<a href="profile.php?'. $list[$u]["permanlink"] . '"><div class="col-md-3 text-center">
+    $html .= '<a href=" profile.php?' . $list[$u]["permalink"] . '"><div class="col-md-3 text-center">
         <div class="widget-user-image">
             <img class="img-circle" width="128" height="128" src="'. $image .'">
         </div>

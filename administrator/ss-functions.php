@@ -3988,7 +3988,7 @@ function users_list( $sql = null ){
 
     if( empty( $sql ) ){
 
-        $SQL = 'SELECT u.nombre, u.apellido, u.email, img.ruta FROM '.SSPREFIX.'usuarios as u LEFT JOIN '.SSPREFIX.'imagespost as img on img.usuario = u.id WHERE u.rango = 1 order by registro';
+        $SQL = 'SELECT u.nombre, u.permalink, u.apellido, u.email, img.ruta FROM '.SSPREFIX.'usuarios as u LEFT JOIN '.SSPREFIX.'imagespost as img on img.usuario = u.id WHERE u.rango = 1 order by registro';
     }
     else{
 
