@@ -165,7 +165,7 @@
                                 <div class="form-group has-feedback">
                                     <label>Localidad:</label>
                                     <input type="text" class="form-control" id="registro-localidad" name="localidad" placeholder="Seleccione su localidad">
-                                    <a class="btn btn-default" id="btnLocalidad" onclick="desbloquearLocalidad()">Borrar Localidad</a>
+                                    <a class="btn btn-default btn-danger" id="btnLocalidad" onclick="desbloquearLocalidad()">Borrar Localidad</a>
                                 </div>
                                 <div class="form-group has-feedback">
                                     <label>Tipo de Usuario</label>
