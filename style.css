@@ -42,7 +42,7 @@ footer .title{
 .menu-down{
     margin-top: 40px;
 }
-.type-equipo, .gender, .position{
+.type-equipo, .gender, .position, .search-gender, .search-age, .search-typeEquipo{
     display: none;
 }
 

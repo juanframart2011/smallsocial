@@ -29,6 +29,7 @@
        register($_POST['nombre'],$_POST['apellido'],$_POST['email'],$_POST['passwordtwo'],$fecha, $type_user, $type_equipo, $gender, $position, $_POST["localidad"]);
     }
     $register_menu = true;
+    $title = 'Registro';
     ?>
 <!DOCTYPE html>
 <html>
@@ -120,47 +121,49 @@
                                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
                                     <input type="password" class="form-control" name="passwordtwo" placeholder="Repetir Contraseña">
                                 </div>
-                                <div class="col-sm-4 text-center" style="padding-left:0px;">
-                                    <label>Dia</label>
-                                    <select class="form-control" name="day">
-                                        <option></option>
-                                        <?php
-                                            for ($i=1; $i < 32; $i++) { 
-                                              echo '<option value="'.$i.'">'.$i.'</option>';
-                                            }
-                                            ?>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4 text-center" style="padding:0px;">
-                                    <label>Mes</label>
-                                    <select class="form-control" name="month">
-                                        <option></option>
-                                        <?php
-                                            $meses = 'Ene,Feb,Mar,Abr,May,Jun,Jul,Ago,Sep,Oct,Nov,Dic';
-                                            $explode = explode(',', $meses);
-                                            for ($i=0; $i < 12; $i++) {
-                                              $mesvalue = $i+1;
-                                              if ($i > 8){
-                                                echo '<option value="'.$mesvalue.'">'.$explode[$i].'</option>';
-                                              }else{
-                                                echo '<option value="0'.$mesvalue.'">'.$explode[$i].'</option>';
-                                              }
-                                            }
-                                            ?>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4 text-center" style="padding-right:0px;">
-                                    <label>Año</label>
-                                    <select class="form-control" name="year">
-                                        <option></option>
-                                        <?php
-                                            $thedate = date('Y') + 1;
-                                            $thelast = $thedate - 100;
-                                            for ($i=$thelast; $i < $thedate; $i++) { 
-                                              echo '<option value="'.$i.'">'.$i.'</option>';
-                                            }
-                                            ?>
-                                    </select>
+                                <div class="row">
+                                    <div class="col-sm-4 text-center">
+                                        <label>Dia</label>
+                                        <select class="form-control" name="day">
+                                            <option></option>
+                                            <?php
+                                                for ($i=1; $i < 32; $i++) { 
+                                                  echo '<option value="'.$i.'">'.$i.'</option>';
+                                                }
+                                                ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 text-center">
+                                        <label>Mes</label>
+                                        <select class="form-control" name="month">
+                                            <option></option>
+                                            <?php
+                                                $meses = 'Ene,Feb,Mar,Abr,May,Jun,Jul,Ago,Sep,Oct,Nov,Dic';
+                                                $explode = explode(',', $meses);
+                                                for ($i=0; $i < 12; $i++) {
+                                                  $mesvalue = $i+1;
+                                                  if ($i > 8){
+                                                    echo '<option value="'.$mesvalue.'">'.$explode[$i].'</option>';
+                                                  }else{
+                                                    echo '<option value="0'.$mesvalue.'">'.$explode[$i].'</option>';
+                                                  }
+                                                }
+                                                ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 text-center">
+                                        <label>Año</label>
+                                        <select class="form-control" name="year">
+                                            <option></option>
+                                            <?php
+                                                $thedate = date('Y') + 1;
+                                                $thelast = $thedate - 100;
+                                                for ($i=$thelast; $i < $thedate; $i++) { 
+                                                  echo '<option value="'.$i.'">'.$i.'</option>';
+                                                }
+                                                ?>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-group has-feedback">
                                     <label>Localidad:</label>
@@ -169,7 +172,7 @@
                                 </div>
                                 <div class="form-group has-feedback">
                                     <label>Tipo de Usuario</label>
-                                    <select class="form-control" id="type_user" name="type_user">
+                                    <select class="form-control" id="type_user" name="type_user" required>
                                         <option>Seleccionar un Usuario</option>
                                         <option value="Equipo">Equipo</option>
                                         <option value="Jugador">Jugador</option>
@@ -187,7 +190,7 @@
                                 </div>
 
                                 <div class="form-group has-feedback gender">
-                                    <label>Tipo de Equipo</label>
+                                    <label>Genero</label>
                                     <select class="form-control" id="gender" name="gender">
                                         <option>Seleccionar un tipo de equipo</option>
                                         <option value="Chico">Chico</option>
@@ -196,7 +199,7 @@
                                 </div>
 
                                 <div class="form-group has-feedback position">
-                                    <label>Tipo de Equipo</label>
+                                    <label>Posición</label>
                                     <select class="form-control" id="position" name="position">
                                         <option>Seleccionar un tipo de equipo</option>
                                         <option value="Portero">Portero</option>

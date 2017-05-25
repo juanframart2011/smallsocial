@@ -3448,6 +3448,7 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         $rankreginew = 1;
         // Registro de nuevo usuario
         $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position, localidad) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position, :localidad)';
+
         $sentence = $conexion -> prepare($SQLReg);
         $sentence -> bindParam(':nombre',$nombre,PDO::PARAM_STR);
         $sentence -> bindParam(':apellido',$apellido,PDO::PARAM_STR);
@@ -3980,7 +3981,54 @@ function ajaxloadpstfeed($page){
 }
 
 
+function users_list( $sql = null ){
 
+    // conexion de base de datos
+    $conexion = Conexion::singleton_conexion();
+
+    if( empty( $sql ) ){
+
+        $SQL = 'SELECT u.nombre, u.apellido, u.email, img.ruta FROM '.SSPREFIX.'usuarios as u LEFT JOIN '.SSPREFIX.'imagespost as img on img.usuario = u.id WHERE u.rango = 1 order by registro';
+    }
+    else{
+
+        $SQL = $sql;
+    }
+    
+    $stn = $conexion -> prepare( $SQL );
+    $stn -> execute();
+    $rstl = $stn -> fetchAll();
+
+    return $rstl;
+    /*foreach( $rstl as $key ){
+
+        if ( is_null( $key['apodo'] ) ) {
+        
+            $apodo = '(Sin Apodo)';
+        }
+        else{
+            
+            $apodo = $key['apodo'];
+        }
+
+        if( $key['emailshow'] == 1 ){
+            
+            $emailshow = $key['email'];
+            $theoptionsselect = '
+            <option value="1">Visible</option>
+            <option value="2">Privado</option>
+            ';
+        }
+        else{
+            
+            $emailshow = '(Privado)';
+            $theoptionsselect = '
+            <option value="2">Privado</option>
+            <option value="1">Visible</option>
+            ';
+        }
+    }*/
+}
 
 
 

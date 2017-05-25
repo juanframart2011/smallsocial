@@ -1,7 +1,7 @@
 <?php 
     require_once 'administrator/ss-functions.php';
     checkisuser();
-    $title = 'Mi Información';
+    $title = 'Buscador';
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@
         <!-- ### TOP MENU ### -->
         <? include( 'helper/header.php' ) ?>
         <!-- ### TOP MENU ### -->
-
+        
         <!-- container -->
         <div class="container">
             <div class="col-sm-9">
@@ -58,6 +58,7 @@
                                 <? include( 'helper/menu_inteno.php' ) ?>
                                 <!-- /.description-block -->
                             </div>
+                            <!-- /.col -->
                         </div>
                         <!-- /.row -->
                     </div>
@@ -67,18 +68,77 @@
                 <div id="timeliner">
                     <div class="box box-info">
                         <div class="box-header ui-sortable-handle">
-                            <h3 style="display: block;width: 100%;" class="box-title"><i class="fa fa-info-circle"></i> Información  <button data-visible="1" class="editinformation btn btn-xs btn-primary pull-right"><i class="fa fa-pencil" aria-hidden="true"></i></button></h3>
+                            <h3 style="display: block;width: 100%;" class="box-title"><i class="fa fa-search"></i> Buscador</h3>
+                            <h4 class="text-center">Solo puede buscar por un filtro a la vez</h4>
                         </div>
                         <div id="boxbodyinfo" class="box-body">
-                            <?php
-                                mytheinformation();
+
+                            <form action="search_form.php" id="form_search" method="post" name="form_search">
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <label>Tipo de Usuario</label>
+                                        <select class="form-control" id="type_user" name="type_user" required>
+                                            <option value="">Seleccionar un Usuario</option>
+                                            <option value="Equipo">Equipo</option>
+                                            <option value="Jugador">Jugador</option>
+                                            <option value="Entrenador">Entrenador</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 search-gender">
+                                        <label>Genero</label>
+                                        <select class="form-control" id="gender" name="gender">
+                                            <option value="">Ambos Genero</option>
+                                            <option value="Chico">Chico</option>
+                                            <option value="Chica">Chica</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  search-age">
+                                        <label>Edad</label>
+                                        <select class="form-control" id="age" name="age">
+                                            <option value="">Todas las edades</option>
+                                            <?
+                                            $ag = 2011;
+                                            for( $i = 6; $i < 70; $i++ ):?>
+                                                <option value="<?= $ag ?>"><?= $i ?></option>
+                                            <?
+                                            $ag--;
+                                            endfor?>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12  col-md-offset-3 col-lg-offset-3 search-typeEquipo">
+                                        <label>Tipo de Equipo</label>
+                                        <select class="form-control" id="type_equipo" name="type_equipo">
+                                            <option value="">Seleccionar un tipo de equipo</option>
+                                            <option value="Federado">Federado</option>
+                                            <option value="Amateur">Amateur</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <br>
+
+                            <div class="content-user row">
+                                <?
+                                $list = users_list();
+                                
+                                for( $u = 0; $u < count( $list ); $u++ ):?>
+                                    <div class="col-md-3 text-center">
+                                        <div class="widget-user-image">
+                                            <img id="image-profile" class="img-circle changeprofilephoto" width="128" height="128" src="<?= ( empty( $list[$u]["ruta"] ) )? 'images/profile-default.jpg' : $list[$u]["ruta"] ?>">
+                                        </div>
+                                        <h5><?= $list[$u]["nombre"] . ' ' . $list[$u]["apellido"] ?></h5>
+                                        <h5><?= $list[$u]["email"] ?></h5>
+                                    </div>
+                                <?
+                                endfor;
                                 ?>
-                            <!-- ### SAVE ### -->
-                            <div class="col-sm-12 text-right">
-                                <p></p>
-                                <button class="savemyeditinformation btn btn-success"><i class="fa fa-floppy-o"></i> Guardar Cambios</button>
                             </div>
-                            <!-- ### SAVE ### -->
                         </div>
                     </div>
                 </div>
@@ -146,6 +206,45 @@
         <script src="js/additional-methods.min.js"></script>
         <!-- SS Member -->
         <script src="js/ss-member.js"></script> 
-        <script src="js/ss-member-line.js"></script>        
+        <script src="js/ss-member-line.js"></script>
+        <script>
+            $( document ).ready( function(){
+
+                $( "#type_user" ).change( function(){
+
+                    if( $( this ).val() == "Equipo" || $( this ).val() == "Jugador" ){
+
+                        $( ".search-typeEquipo" ).css( "display", "none" );
+                        $( ".search-gender, .search-age" ).css( "display", "block" );
+                    }
+                    else if( $( this ).val() == "Entrenador" ){
+
+                        $( ".search-gender, .search-age" ).css( "display", "none" );
+                        $( ".search-typeEquipo" ).css( "display", "block" );
+                    }
+                });
+
+                $( "#type_user, #gender, #age, #type_equipo" ).change( function(){
+
+                    $.ajax({
+                        url: $( "#form_search" ).attr( "action" ),
+                        type: 'POST',
+                        dataType: 'html',
+                        data: $( "#form_search" ).serialize(),
+                    })
+                    .done(function( data ) {
+                        
+                        $( ".content-user" ).html( data );
+                    })
+                    .fail(function( error ){
+
+                        console.log( error );
+                    })
+                    .always(function() {
+                        console.log("complete");
+                    });
+                });
+            });
+        </script>  
     </body>
 </html>

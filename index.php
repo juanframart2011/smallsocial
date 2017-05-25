@@ -4,6 +4,7 @@ checklogin();
 if (isset($_POST['email'])){
    theloginmemeber($_POST['email'],$_POST['password']);
 }
+$title = 'Home';
 ?>
 <!DOCTYPE html>
 <html>
