@@ -3393,7 +3393,7 @@ function checkregisterrequired(){
 
 
 
-function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_equipo, $gender, $position){
+function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_equipo, $gender, $position, $localidad){
 
   // conexion de base de datos
   $conexion = Conexion::singleton_conexion();
@@ -3447,7 +3447,7 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         #------------------------------------------------------------
         $rankreginew = 1;
         // Registro de nuevo usuario
-        $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position)';
+        $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position, localidad) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position, :localidad)';
         $sentence = $conexion -> prepare($SQLReg);
         $sentence -> bindParam(':nombre',$nombre,PDO::PARAM_STR);
         $sentence -> bindParam(':apellido',$apellido,PDO::PARAM_STR);
@@ -3463,6 +3463,7 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         $sentence -> bindParam(':type_equipo',$type_equipo,PDO::PARAM_STR);
         $sentence -> bindParam(':gender',$gender,PDO::PARAM_STR);
         $sentence -> bindParam(':position',$position,PDO::PARAM_STR);
+        $sentence -> bindParam(':localidad',$localidad,PDO::PARAM_STR);
 
         $sentence -> execute();
         $lastiduser = $conexion -> lastInsertId();

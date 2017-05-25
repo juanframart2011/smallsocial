@@ -21,6 +21,7 @@ $("#registerfrm").validate({
   rules: {
     type_user: "required",
     nombre: "required",
+    localidad: "required",
     day: "required",
     month: "required",
     year: "required",

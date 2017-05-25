@@ -26,7 +26,7 @@
             $position = '';
         }
 
-       register($_POST['nombre'],$_POST['apellido'],$_POST['email'],$_POST['passwordtwo'],$fecha, $type_user, $type_equipo, $gender, $position);
+       register($_POST['nombre'],$_POST['apellido'],$_POST['email'],$_POST['passwordtwo'],$fecha, $type_user, $type_equipo, $gender, $position, $_POST["localidad"]);
     }
     $register_menu = true;
     ?>
@@ -162,7 +162,11 @@
                                             ?>
                                     </select>
                                 </div>
-                                
+                                <div class="form-group has-feedback">
+                                    <label>Localidad:</label>
+                                    <input type="text" class="form-control" id="registro-localidad" name="localidad" placeholder="Seleccione su localidad">
+                                    <a class="btn btn-default" id="btnLocalidad" onclick="desbloquearLocalidad()">Borrar Localidad</a>
+                                </div>
                                 <div class="form-group has-feedback">
                                     <label>Tipo de Usuario</label>
                                     <select class="form-control" id="type_user" name="type_user">
@@ -223,7 +227,45 @@
         </div>
         
         <? include( 'helper/footer.php' ) ?>
-        <script type="text/javascript">
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDOieTDxaSKgXg-L4xoZEUulLJz2AvhDKE"></script>
+        <script>
+            function init() {
+                var input = document.getElementById('registro-localidad');
+                var opts = {
+                    types: ['(cities)']
+                };
+                var autocomplete = new google.maps.places.Autocomplete(input, opts);
+
+                //Bloqueamos el input si seleccionamos una localidad y hacemos visible el botón 'Borrar Localidad'
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                    var result = autocomplete.getPlace();
+
+                    //addressObj.types[j] - confirma que es un pais
+                    //addressObj.long_name - se obtiene el nombre del pais
+                    for (var i = 0; i < result.address_components.length; i++) {
+                        var addressObj = result.address_components[i];
+                        for (var j = 0; j < addressObj.types.length; j++) {
+                            //console.log(addressObj.types[j]);
+                            if (addressObj.types[j] == 'locality') {
+                                console.log(addressObj.long_name);
+                            }
+                            if (addressObj.types[j] == 'country') {
+                                console.log(addressObj.long_name);
+                            }
+                        }
+                    }
+                    document.getElementById('registro-localidad').readOnly = true;
+                    document.getElementById('btnLocalidad').style.display = 'block';
+                });
+            }
+            google.maps.event.addDomListener(window, 'load', init);
+
+            function desbloquearLocalidad() {
+                document.getElementById('registro-localidad').removeAttribute("readOnly");
+                document.getElementById("registro-localidad").value = "";
+                document.getElementById('btnLocalidad').style.display = 'none';
+            }
+
             $( document ).ready( function(){
 
                 $( "#type_user" ).change( function(){

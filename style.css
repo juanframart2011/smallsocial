@@ -18,6 +18,9 @@ footer .title{
     font-size: 14px;
     font-weight: bold;
 }
+.btnLocalidad{
+    display: none;
+}
 .navbar-default{
     background: #BDBDBD;
 }
