@@ -1,0 +1,65 @@
+
+
+
+
+
+
+
+
+@media(max-width:767px){
+
+
+
+.description-block a{
+	display: inline-block;
+	width: 100%;
+}
+
+
+.widget-user .widget-user-image {
+    position: absolute;
+    top: 100px;
+    left: 45%;
+    margin-left: -45px;
+}
+
+
+
+	
+}
+
+
+
+
+@media(min-width:768px){
+
+
+
+.widget-user .widget-user-image {
+    position: absolute;
+    top: 100px;
+    left: 15%;
+    margin-left: -45px;
+}
+
+
+
+
+
+
+
+
+
+
+	
+}
+
+
+
+@media (min-width: 992px){
+
+.modal-lg {
+    width: 1024px;
+}
+    
+}
