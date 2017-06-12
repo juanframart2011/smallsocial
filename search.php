@@ -75,7 +75,7 @@
 
                             <form action="search_form.php" id="form_search" method="post" name="form_search">
                                 <div class="row">
-                                    <div class="col-md-4 col-md-offset-4">
+                                    <div class="col-md-3 col-md-offset-3">
                                         <label>Tipo de Usuario</label>
                                         <select class="form-control" id="type_user" name="type_user" required>
                                             <option value="">Seleccionar un Usuario</option>
@@ -84,8 +84,16 @@
                                             <option value="Entrenador">Entrenador</option>
                                         </select>
                                     </div>
+                                    <div class="col-md-3">
+                                        <label>Localidad</label>
+                                        <input type="text" class="form-control" id="registro-localidad" name="localidad" placeholder="Seleccione su localidad">
+                                        <a class="btn btn-default btn-danger" id="btnLocalidad" onclick="desbloquearLocalidad()">Borrar Localidad</a>
+                                    </div>
                                 </div>
                                 <br>
+                                <input id="ciudad" name="ciudad" type="hidden">
+                                <input id="pais" name="pais" type="hidden">
+                                <input id="region" name="region" type="hidden">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 search-gender">
                                         <label>Genero</label>
@@ -207,6 +215,8 @@
         <!-- SS Member -->
         <script src="js/ss-member.js"></script> 
         <script src="js/ss-member-line.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDOieTDxaSKgXg-L4xoZEUulLJz2AvhDKE"></script>
+        <script src="js/localidad.js" type="text/javascript"></script>
         <script>
             $( document ).ready( function(){
 

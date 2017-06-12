@@ -3393,7 +3393,7 @@ function checkregisterrequired(){
 
 
 
-function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_equipo, $gender, $position, $localidad){
+function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_equipo, $gender, $position, $localidad, $pais, $ciudad, $region){
 
   // conexion de base de datos
   $conexion = Conexion::singleton_conexion();
@@ -3447,7 +3447,7 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         #------------------------------------------------------------
         $rankreginew = 1;
         // Registro de nuevo usuario
-        $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position, localidad) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position, :localidad)';
+        $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position, localidad, pais, ciudad, region) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position, :localidad, :pais, :ciudad, :region)';
 
         $sentence = $conexion -> prepare($SQLReg);
         $sentence -> bindParam(':nombre',$nombre,PDO::PARAM_STR);
@@ -3465,10 +3465,12 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         $sentence -> bindParam(':gender',$gender,PDO::PARAM_STR);
         $sentence -> bindParam(':position',$position,PDO::PARAM_STR);
         $sentence -> bindParam(':localidad',$localidad,PDO::PARAM_STR);
+        $sentence -> bindParam(':pais',$pais,PDO::PARAM_STR);
+        $sentence -> bindParam(':ciudad',$ciudad,PDO::PARAM_STR);
+        $sentence -> bindParam(':region',$region,PDO::PARAM_STR);
 
         $sentence -> execute();
         $lastiduser = $conexion -> lastInsertId();
-
 
         // Insertar para informacion del usuario
         $desripcionrow = 'Aqui puedes editar tu información :)';
@@ -3479,13 +3481,8 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         $infosentence -> bindParam(':description',$desripcionrow,PDO::PARAM_STR);
         $infosentence -> bindParam(':emailshow',$emailrowshow,PDO::PARAM_STR);
         $infosentence -> execute();
-
-
-
-
         
         if ($requiredsendmail == 1){
-
 
         // Insertar para Verificar
         $mailtoken = sha1($email.TOKENMAIL);
@@ -3509,8 +3506,6 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
            header('Location: register.php?nomail');
          #------------------------------------------------------------  
          }
-
-
 }
 
 
