@@ -18,16 +18,13 @@ $title = 'Home';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right">
-                    <img src="images/home.png" alt="">
+                    <img src="http://i.imgur.com/bJmaCX6.png" alt="">
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
                     <div class="register-box">
-                        <h1 style="font-weight: bold;">Hola,</h1><br>
-                        <h3>bienvenido a tu sitio deportivo, social eficaz</h3>
-                        <div class="register-logo">
-                            <a href="index.php">MeeTeam</a>
-                        </div>
-                        <div align="center"> Sport Is Life </div>
+                        <h1 style="font-weight: bold;">Hola,</h1>
+                        <h2>bienvenido a tu sitio deportivo, social y eficaz.</h2>
+                        
                         <div class="register-box-body">
                             <?php
                                 if (isset($_GET['active'])) {

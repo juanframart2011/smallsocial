@@ -1,12 +1,18 @@
 <footer class="container-fluid">
 	<div class="row">
 		<div class="col-lg-2 col-lg-offset-2 col-md-2 col-md-offset-2 col-sm-6 col-xs-12 text-center">
-			<span class="title">LLAMANOS</span><br>
+			<span class="title">**********</span><br>
 			<span></span>
 		</div>
 		<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 text-center">
-			<span class="title">CONTRACTANOS</span><br>
-			<span></span>
+			<span class="title">DESCARGA LA APP</span><br>
+			<div class="row">
+	<a class="col-lg-4 col-md-4" href="#"><img class="img-responsive" src="http://i.imgur.com/iMwj03B.png" alt=""></a></i></a>
+	<a class="col-lg-4 col-md-4" href="#"><img class="img-responsive" src="http://i.imgur.com/Gi7aDV8.png" alt=""></a></i></a>
+	<a class="col-lg-4 col-md-4" href="#"><img class="img-responsive" src="http://i.imgur.com/yCwJq5Z.png" alt=""></a></i></a>
+		</div>
+			</span>
+			</span>
 		</div>
 		<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 text-center">
 			<span class="title">SÍGUENOS</span><br>

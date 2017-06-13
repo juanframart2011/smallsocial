@@ -153,7 +153,7 @@ if (empty($thenameuser) || is_null($thenameuser)){
 
                 <div class="col-sm-8 border-right">
                   <div class="description-block" style="text-align:center;">
-                      <a href="profile.php?<?php echo $thepermauser; ?>" class="btn btn-sm btn-default"><i class="fa fa-clock-o"></i> Timeline</a>
+                      <a href="profile.php?<?php echo $thepermauser; ?>" class="btn btn-sm btn-default"><i class="fa fa-clock-o"></i> Inicio</a>
                       <a  href="theinformation.php?<?php echo $thepermauser; ?>" class="infoprofilebtn btn btn-sm btn-default"><i class="fa fa-info-circle"></i> Información</a>
                       <a href="thepictures.php?<?php echo $thepermauser; ?>"  class="picturesprofilebtn btn btn-sm btn-default active"><i class="fa fa-picture-o"></i> Fotos</a>
                       <a href="thefollowers.php?<?php echo $thepermauser; ?>"  class="followersprofilebtn btn btn-sm btn-default"><i class="fa fa-users"></i> Seguidores</a>

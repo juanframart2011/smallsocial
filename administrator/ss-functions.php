@@ -778,20 +778,21 @@ function getattachblock($id,$desc){
     }else{
        
        foreach ($rstl as $key){
+        $ruta = str_replace('../', '', $key['ruta']);
         echo '<p></p>
               <div class="attachment-block clearfix">
-                <img class="attachment-img" src="images/extensions/'.$key['ext'].'.png" >
-
                 <div class="attachment-pushed">
-                  <h4 class="attachment-heading"><a target="_blank" href="attachment.php?'.$key['permalink'].'">'.$key['nombre'].'</a></h4>
-
-                  <div class="attachment-text" style="margin-top: 7px;">
+                  <video class="col-md-12" autobuffer autoloop loop controls>
+                    <source src="'.$ruta.'">
+                  </video>
+                  ';
+                  /*<div class="attachment-text" style="margin-top: 7px;">
                     <p style="margin: 0px;"><label>Fecha de Creación:</label>'.fechastringchat($key['fecha']).'</p>
                     <p><label>Descripción:</label> '.emoticons($desc).'</p>
                     <p><label>Peso: </label> '.formatSizeUnits($key['peso']).'</p>
                     <a target="_blank" class="btn btn-sm btn-danger pull-right" href="attachment.php?'.$key['permalink'].'"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
                   </div>
-                  <!-- /.attachment-text -->
+                  <!-- /.attachment-text -->*/ echo '
                 </div>
                 <!-- /.attachment-pushed -->
               </div>
@@ -3393,7 +3394,7 @@ function checkregisterrequired(){
 
 
 
-function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_equipo, $gender, $position, $localidad){
+function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_equipo, $gender, $position, $localidad, $pais, $ciudad, $region){
 
   // conexion de base de datos
   $conexion = Conexion::singleton_conexion();
@@ -3447,7 +3448,7 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         #------------------------------------------------------------
         $rankreginew = 1;
         // Registro de nuevo usuario
-        $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position, localidad) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position, :localidad)';
+        $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position, localidad, pais, ciudad, region) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position, :localidad, :pais, :ciudad, :region)';
 
         $sentence = $conexion -> prepare($SQLReg);
         $sentence -> bindParam(':nombre',$nombre,PDO::PARAM_STR);
@@ -3465,10 +3466,12 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         $sentence -> bindParam(':gender',$gender,PDO::PARAM_STR);
         $sentence -> bindParam(':position',$position,PDO::PARAM_STR);
         $sentence -> bindParam(':localidad',$localidad,PDO::PARAM_STR);
+        $sentence -> bindParam(':pais',$pais,PDO::PARAM_STR);
+        $sentence -> bindParam(':ciudad',$ciudad,PDO::PARAM_STR);
+        $sentence -> bindParam(':region',$region,PDO::PARAM_STR);
 
         $sentence -> execute();
         $lastiduser = $conexion -> lastInsertId();
-
 
         // Insertar para informacion del usuario
         $desripcionrow = 'Aqui puedes editar tu información :)';
@@ -3479,13 +3482,8 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         $infosentence -> bindParam(':description',$desripcionrow,PDO::PARAM_STR);
         $infosentence -> bindParam(':emailshow',$emailrowshow,PDO::PARAM_STR);
         $infosentence -> execute();
-
-
-
-
         
         if ($requiredsendmail == 1){
-
 
         // Insertar para Verificar
         $mailtoken = sha1($email.TOKENMAIL);
@@ -3509,8 +3507,6 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
            header('Location: register.php?nomail');
          #------------------------------------------------------------  
          }
-
-
 }
 
 
