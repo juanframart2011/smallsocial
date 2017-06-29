@@ -241,8 +241,6 @@ $('.eliminarthispost').on('click', function(){
               showerror('Revisa tu conexion a internet');
            }
     });
-
-
 });
 
 

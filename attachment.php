@@ -19,5 +19,3 @@ if (ctype_space($permalink)) {
 
 // Funcion para la descarga del archivo
 downloadarchive($permalink);
-
-

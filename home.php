@@ -83,7 +83,8 @@
                         <!-- /.box-body -->
                     </form>
                     <div class="box-footer">
-                        <button class="btn btn-danger btn-sm pull-left" data-toggle="modal" data-target="#ModalDocumment"> <i class="fa fa-file-archive-o" aria-hidden="true"></i> Vídeo</button>
+                        <button class="btn btn-danger btn-sm pull-left" data-toggle="modal" data-target="#ModalDocumment"> <i class="fa fa-file-archive-o" aria-hidden="true"></i> Vídeo</button>&#32;&#32;
+                        <button class="btn btn-success btn-sm pull-left" data-toggle="modal" data-target="#ModalImage"> <i class="fa fa-picture-o" aria-hidden="true"></i> Imagen</button>
                         <button class="posterbtn btn btn-info btn-sm pull-right"><i class="fa fa-pencil"></i> Publicar</button>
                     </div>
                     <!-- /.box-footer -->
@@ -133,6 +134,36 @@
                         </div>
                         <!-- progress -->
                         <button type="button" class="uploadarchive btn btn-primary pull-right">Subir Vídeo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="ModalImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-upload" aria-hidden="true"></i> Subir Imagen</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="thefilattch2" class="col-sm-12">
+                            <form id="archiveimage">
+                                <label>Descripción:</label>
+                                <textarea class="form-control" name="descripcion_image" rows="3"></textarea>
+                                <label>Imagen:</label>
+                                <input type="file" name="imagedata" class="form-control">
+                            </form>
+                            <p></p>
+                            <p>Solo se aceptan vídeos con la extensión: jpg, jpeg, png</p>
+                        </div>
+                        <!-- progress -->
+                        <div id="loadeingarchive2" class="progress active">
+                            <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                            </div>
+                        </div>
+                        <!-- progress -->
+                        <button type="button" class="uploadimage btn btn-primary pull-right">Subir Imagen</button>
                     </div>
                 </div>
             </div>

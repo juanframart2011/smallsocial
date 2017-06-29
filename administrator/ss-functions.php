@@ -780,22 +780,22 @@ function getattachblock($id,$desc){
        foreach ($rstl as $key){
         $ruta = str_replace('../', '', $key['ruta']);
         echo '<p></p>
-              <div class="attachment-block clearfix">
-                <div class="attachment-pushed">
-                  <video class="col-md-12" autobuffer autoloop loop controls>
-                    <source src="'.$ruta.'">
-                  </video>
-                  ';
-                  /*<div class="attachment-text" style="margin-top: 7px;">
-                    <p style="margin: 0px;"><label>Fecha de Creación:</label>'.fechastringchat($key['fecha']).'</p>
-                    <p><label>Descripción:</label> '.emoticons($desc).'</p>
-                    <p><label>Peso: </label> '.formatSizeUnits($key['peso']).'</p>
-                    <a target="_blank" class="btn btn-sm btn-danger pull-right" href="attachment.php?'.$key['permalink'].'"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
-                  </div>
-                  <!-- /.attachment-text -->*/ echo '
+            <div class="attachment-block clearfix">
+              <div class="attachment-pushed">
+                <video class="col-md-12" autobuffer autoloop loop controls>
+                  <source src="'.$ruta.'">
+                </video>
+                ';
+                /*<div class="attachment-text" style="margin-top: 7px;">
+                  <p style="margin: 0px;"><label>Fecha de Creación:</label>'.fechastringchat($key['fecha']).'</p>
+                  <p><label>Descripción:</label> '.emoticons($desc).'</p>
+                  <p><label>Peso: </label> '.formatSizeUnits($key['peso']).'</p>
+                  <a target="_blank" class="btn btn-sm btn-danger pull-right" href="attachment.php?'.$key['permalink'].'"><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>
                 </div>
-                <!-- /.attachment-pushed -->
+                <!-- /.attachment-text -->*/ echo '
               </div>
+              <!-- /.attachment-pushed -->
+            </div>
          ';
        }
     }
@@ -2436,6 +2436,24 @@ function gettheextattachment(){
     }
 }
 
+function gettheextattachment2(){
+
+    // conexion de base de datos
+    $conexion = Conexion::singleton_conexion();
+
+    $SQL = 'SELECT archiveextensions FROM '.SSPREFIX.'socialconfig WHERE id = 2';
+    $stn = $conexion -> prepare($SQL);
+    $stn -> execute();
+    $rstl = $stn -> fetchAll();
+    if (empty($rstl)){
+    }else{
+      foreach ($rstl as $key){
+        $fileext = $key['archiveextensions'];
+        return $fileext;
+      }
+    }
+}
+
 
 function validextlist(){
 
@@ -2641,9 +2659,105 @@ function attachmentfiles($file,$description){
 
 
     $conexion = '';
+}
+
+// Para subir un archivo 2
+function attachmentfiles2($file,$description){
+
+    // conexion de base de datos
+    $conexion = Conexion::singleton_conexion();
+
+    // Primero el Año
+    $theyear = date('Y');
+
+    // Ahora el Mes 
+    $themonth = date ('m');
+
+    // Ahora usamos la sesion del usuario para su respectiva carpeta
+    $theuser = $_SESSION['ssid'];
+
+    // Creamos un alfanumerico aleatorio.
+    $characters = 'abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $string = '';
+    for ($i = 0; $i < 60; $i++) {
+     $string .= $characters[rand(0, strlen($characters) - 1)];
+    }
+
+    // Tomamos la fecha y hora con segundos
+    $fechaseconds = date('Y-m-d h:i:s');
+    $fechanormal =  date('Y-m-d');
+
+    // Nuevo nombre del Archivo
+    $thenewname = sha1($fechaseconds.$theuser.$string);
+
+    // Obtenemos la extension
+    $fileext = new SplFileInfo($file);
+    $getextension = $fileext->getExtension();
+
+    // convertimos extension a minusculas
+    $extension = strtolower($getextension);
+
+    //comprobamos si el archivo ha subido y lo movemos a una su respectiva ruta
+    if ($file && move_uploaded_file($_FILES['imagedata']['tmp_name'],"../images/gallery/".$theuser."/".$theyear."/".$themonth."/".$thenewname.".".$extension)){
+    }  
+
+    // Creamos ruta del temporal
+    $temporal = "images/gallery/".$theuser."/".$theyear."/".$themonth."/".$thenewname.".".$extension;
 
 
+    // Creamos el permalink de la publicacion
+    $permalink = sha1($string.$fechaseconds);
 
+
+    // Limitamos las publicaciones a tan solo 1000 caracteres
+    $postparse = substr($description, 0,1000);
+
+    // Filtramos para evitar XSS Injection
+    $filtro = new InputFilter();
+    $finalpost = $filtro->process($postparse);
+
+    // Tamaño del archivo
+    $filesize = $_FILES['imagedata']['size'];
+
+    // Nombre del Archivo
+    $filename = $_FILES['imagedata']['name'];
+
+    // Revisamos si el resultado es vacio para no tener que postearlo
+    if (empty($finalpost)){
+       exit();
+    }
+
+    if (is_null($finalpost)){
+       exit();
+    }
+
+    // Hacemos el registro del Archivo
+    $FileAttch = 'INSERT INTO '.SSPREFIX.'gallery (ruta, nombre, usuario, fecha, ext, peso, permalink) VALUES (:ruta, :nombre, :usuario, :fecha, :ext, :peso, :permalink)';
+    $stnfile = $conexion -> prepare($FileAttch);
+    $stnfile -> bindParam(':ruta', $temporal ,PDO::PARAM_STR);
+    $stnfile -> bindParam(':usuario', $_SESSION['ssid'] ,PDO::PARAM_STR);
+    $stnfile -> bindParam(':nombre', $filename ,PDO::PARAM_INT);
+    $stnfile -> bindParam(':fecha', $fechaseconds ,PDO::PARAM_STR);
+    $stnfile -> bindParam(':ext', $extension ,PDO::PARAM_STR);
+    $stnfile -> bindParam(':peso', $filesize ,PDO::PARAM_STR);
+    $stnfile -> bindParam(':permalink', $thenewname ,PDO::PARAM_STR);
+    $stnfile -> execute();
+    $lastidfile = $conexion -> lastInsertId();
+
+    // Post con archivo
+    $thepostpostarchive = $lastidfile.'|'.$finalpost;
+
+    // imagen de perfil 
+    $profileimg = userprofile($_SESSION['ssid']);
+    
+    // Fecha
+    $fechastronger = fechastring($fechanormal,$permalink);
+
+    echo'<div class="alert alert-success alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Warning!</strong>Agregada imagen a tu galería</div>';
+
+    $conexion = '';
 }
 
 
@@ -2653,7 +2767,7 @@ function downloadarchive($permalink){
      // conexion de base de datos
      $conexion = Conexion::singleton_conexion();
 
-     $SQL = 'SELECT * FROM '.SSPREFIX.'attachment WHERE permalink = :permalink LIMIT 1';
+     $SQL = 'SELECT * FROM '.SSPREFIX.'gallery WHERE permalink = :permalink LIMIT 1';
      $stn = $conexion -> prepare($SQL);
      $stn -> bindParam(':permalink', $permalink ,PDO::PARAM_STR);
      $stn -> execute();
@@ -2839,6 +2953,41 @@ function mypicturespage(){
            <a class="showthepictureitem" data-toggle="modal" data-id="'.$key['id'].'" data-target="#myModal">
              <img width="400" src="'.str_replace('normal', 'small', $key['ruta']).'" >
            </a>
+           ';
+          }
+
+       }
+    }
+}
+
+// Mis imagenes
+function mygallery(){
+
+     // conexion de base de datos
+     $conexion = Conexion::singleton_conexion();
+
+     $SQL = 'SELECT * FROM '.SSPREFIX.'gallery WHERE usuario = :usuario ORDER BY id DESC';
+     $stn = $conexion -> prepare($SQL);
+     $stn -> bindParam(':usuario', $_SESSION['ssid'] ,PDO::PARAM_INT);
+     $stn -> execute();
+     $rstl = $stn -> fetchAll();
+     if (empty($rstl)){
+     }else{
+       foreach ($rstl as $key){
+          
+          if ($key['type'] == 1){
+           echo '
+           <div class="col-md-6">
+             <img class="img-responsive" src="'.str_replace('normal', 'small', $key['ruta']).'" ><br>
+             <span></span>
+           </div>
+           ';
+          }else{
+           echo '
+           <div class="col-md-6">
+             <img class="img-responsive" src="'.str_replace('normal', 'small', $key['ruta']).'" ><br>
+             <span></span>
+           </div>
            ';
           }
 

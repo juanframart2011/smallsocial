@@ -1,2 +1,4 @@
 /administrator/include/conexion.class.php
 administrator/include/conexion.class.php
+attachments/*
+images/photos/*

@@ -92,10 +92,11 @@ checkisuser();
               <h3 class="box-title">Fotos</h3>
             </div>
             <div id="thepictures" class="box-body">
-              
               <?php  mypicturespage(); ?>
-
-
+            </div>
+            <div id="thepictures" class="box-body">
+              
+              <?php  mygallery(); ?>
             </div>
 
           </div>  
@@ -142,8 +143,6 @@ checkisuser();
       <div id="picturebodymodaldiv" class="modal-body" style="padding: 0px;" >
         
         <div class="loader-inner line-scale"><div></div><div></div><div></div><div></div><div></div></div>
-
-
       </div>
     </div>
   </div>

@@ -546,81 +546,158 @@ function checklikecomments(likedata){
 // funcion para los archivos
 $('.uploadarchive').on('click', function(){
 
-jQuery.validator.setDefaults({
-  debug: true,
-  success: "valid"
+    jQuery.validator.setDefaults({
+        
+        debug: true,
+        success: "valid"
+    });
+
+    var form = $('#attachmentfrm');
+    
+    form.validate({
+        rules: {
+            descripcion: "required",
+            archivo: "required"
+        }
+    });
+    
+    var dado = form.valid();
+
+    if (dado == true){
+
+        //información del formulario
+        var formarchive = new FormData($("#attachmentfrm")[0]);
+
+        $.ajax({
+
+            url: 'includes/ajax-attachment.php',  
+            type: 'POST',
+            // Form data
+            //datos del formulario
+            data: formarchive,
+            //necesario para subir archivos via ajax
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function(){
+                
+                $('#thefilattch').hide();
+                $('#loadeingarchive').show();
+            },
+            success: function(data){
+
+                if (data == ""){
+
+                    $('#attachmentfrm')[0].reset();
+                    $('#thefilattch').show();
+                    $('#loadeingarchive').hide();
+                }
+                else{
+
+                    $('#ModalDocumment').modal('toggle');
+                    $('#attachmentfrm')[0].reset();
+                    $('#thefilattch').show();
+                    $('#loadeingarchive').hide();
+                    $('#timeliner').prepend(data);
+
+                    // Comentar Post
+                    $('.commentfrm').on('keyup keypress', function(e) {var keyCode = e.keyCode || e.which;var formcomment = $(this).attr('data-form');if (keyCode === 13){jQuery.validator.setDefaults({debug: true,success: "valid"});var form = $('#commentfrm'+formcomment);form.validate({rules: {comentario: "required",}});var dado = form.valid();if (dado == true){var seriacomment = $('#commentfrm'+formcomment).serialize();var finalseriacomment = seriacomment+'&post='+formcomment;$.ajax({type: 'POST',url:  'includes/ajax-comments.php',data: finalseriacomment,beforeSend: function(){$('#commentfrm'+formcomment+' input').prop("disabled", true);},success: function(data){form[0].reset();$('#box-commets-body-'+formcomment).prepend(data);$('#commentfrm'+formcomment+' input').prop("disabled", false);},error: function(){}});}else{return;}e.preventDefault();return false;}});
+
+                    // Eliminar Comentario
+                    $('.deletecommentadmin').on('click', function(){var cmt = $(this).attr('data-comment');var sendercmt = 'comentario='+cmt;$.ajax({type: 'POST',url:  'includes/ajax-commentsdela.php',data: sendercmt,beforeSend(){$('#commentario-per-'+cmt).addClass('opacity');},success: function(){$('#commentario-per-'+cmt).addClass('animated bounceOut').fadeOut(1000);setTimeout(function(){$('#commentario-per-'+cmt).remove();},1500);},error: function(){showerror('Revisa tu conexion a internet');}});});
+                    $('.deletecomment').on('click', function(){var cmt = $(this).attr('data-comment');var sendercmt = 'comentario='+cmt;$.ajax({type: 'POST',url:  'includes/ajax-commentsdelu.php',data: sendercmt,beforeSend(){$('#commentario-per-'+cmt).addClass('opacity');},success: function(){$('#commentario-per-'+cmt).addClass('animated bounceOut').fadeOut(1000);setTimeout(function(){$('#commentario-per-'+cmt).remove();},1500);},error: function(){showerror('Revisa tu conexion a internet');}});});
+                }
+            },
+            error: function(){
+
+            showerror('Revisa tu conexion a internet');
+            }
+        });
+    }
+    else{
+
+        return;
+    }
 });
-var form = $('#attachmentfrm');
-form.validate({
-  rules: {
-    descripcion: "required",
-    archivo: "required"
-  } 
-});
-var dado = form.valid();
 
-if (dado == true){
+// funcion para los archivos
+$('.uploadimage').on('click', function(){
 
-//información del formulario
-var formarchive = new FormData($("#attachmentfrm")[0]);
+    console.log( "AA" );
+    jQuery.validator.setDefaults({
+        
+        debug: true,
+        success: "valid"
+    });
 
-$.ajax({
-      url: 'includes/ajax-attachment.php',  
-      type: 'POST',
-      // Form data
-      //datos del formulario
-      data: formarchive,
-      //necesario para subir archivos via ajax
-      cache: false,
-      contentType: false,
-      processData: false,
-      beforeSend: function(){
-          $('#thefilattch').hide();
-          $('#loadeingarchive').show();
-      },
-      success: function(data){
-         
-          if (data == ""){
-              $('#attachmentfrm')[0].reset();
-              $('#thefilattch').show();
-              $('#loadeingarchive').hide();
-          }else{
-              $('#ModalDocumment').modal('toggle');
-              $('#attachmentfrm')[0].reset();
-              $('#thefilattch').show();
-              $('#loadeingarchive').hide();
-              $('#timeliner').prepend(data);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    var form = $('#archiveimage');
+    console.log( "BB" );
+    form.validate({
+        rules: {
+            descripcion_image: "required",
+            archivo: "required"
+        }
+    });
+    
+    var dado = form.valid();
+    console.log( "CC" );
+    if (dado == true){
 
+        console.log( "EE" );
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Comentar Post
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-$('.commentfrm').on('keyup keypress', function(e) {var keyCode = e.keyCode || e.which;var formcomment = $(this).attr('data-form');if (keyCode === 13){jQuery.validator.setDefaults({debug: true,success: "valid"});var form = $('#commentfrm'+formcomment);form.validate({rules: {comentario: "required",}});var dado = form.valid();if (dado == true){var seriacomment = $('#commentfrm'+formcomment).serialize();var finalseriacomment = seriacomment+'&post='+formcomment;$.ajax({type: 'POST',url:  'includes/ajax-comments.php',data: finalseriacomment,beforeSend: function(){$('#commentfrm'+formcomment+' input').prop("disabled", true);},success: function(data){form[0].reset();$('#box-commets-body-'+formcomment).prepend(data);$('#commentfrm'+formcomment+' input').prop("disabled", false);},error: function(){}});}else{return;}e.preventDefault();return false;}});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Eliminar Comentario
-$('.deletecommentadmin').on('click', function(){var cmt = $(this).attr('data-comment');var sendercmt = 'comentario='+cmt;$.ajax({type: 'POST',url:  'includes/ajax-commentsdela.php',data: sendercmt,beforeSend(){$('#commentario-per-'+cmt).addClass('opacity');},success: function(){$('#commentario-per-'+cmt).addClass('animated bounceOut').fadeOut(1000);setTimeout(function(){$('#commentario-per-'+cmt).remove();},1500);},error: function(){showerror('Revisa tu conexion a internet');}});});
-$('.deletecomment').on('click', function(){var cmt = $(this).attr('data-comment');var sendercmt = 'comentario='+cmt;$.ajax({type: 'POST',url:  'includes/ajax-commentsdelu.php',data: sendercmt,beforeSend(){$('#commentario-per-'+cmt).addClass('opacity');},success: function(){$('#commentario-per-'+cmt).addClass('animated bounceOut').fadeOut(1000);setTimeout(function(){$('#commentario-per-'+cmt).remove();},1500);},error: function(){showerror('Revisa tu conexion a internet');}});});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //información del formulario
+        var formarchive = new FormData($("#archiveimage")[0]);
 
+        $.ajax({
+            
+            url: 'includes/ajax-image.php',  
+            type: 'POST',
+            // Form data
+            //datos del formulario
+            data: formarchive,
+            //necesario para subir archivos via ajax
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function(){
+                
+                console.log( "FF" );
+                $('#thefilattch2').hide();
+                $('#loadeingarchive2').show();
+            },
+            success: function(data){
 
+                console.log( "GG" );
 
+                if (data == ""){
 
+                    console.log( "HH" );
+                    $('#archiveimage')[0].reset();
+                    $('#thefilattch2').show();
+                    $('#loadeingarchive2').hide();
+                }
+                else{
 
+                    console.log( "II" );
+                    $('#ModalImage').modal('toggle');
+                    $('#archiveimage')[0].reset();
+                    $('#thefilattch2').show();
+                    $('#loadeingarchive2').hide();
+                    $('#timeliner').prepend(data);
+                }
+            },
+            error: function(){
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-          }
+                console.log( "JJ" );
+                showerror('Revisa tu conexion a internet');
+            }
+        });
+    }
+    else{
 
-      },
-      error: function(){
-         showerror('Revisa tu conexion a internet');
-      }
-});
-}else{
-  return;
-}
-
-
+        console.log( "DD" );
+        return;
+    }
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
