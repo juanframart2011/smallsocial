@@ -2744,14 +2744,6 @@ function attachmentfiles2($file,$description){
     $stnfile -> execute();
     $lastidfile = $conexion -> lastInsertId();
 
-    // Post con archivo
-    $thepostpostarchive = $lastidfile.'|'.$finalpost;
-
-    // imagen de perfil 
-    $profileimg = userprofile($_SESSION['ssid']);
-    
-    // Fecha
-    $fechastronger = fechastring($fechanormal,$permalink);
 
     echo'<div class="alert alert-success alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
