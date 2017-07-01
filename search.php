@@ -7,6 +7,70 @@
 <html lang="en">
 
     <? include( 'helper/head.php' ) ?>
+    <style>
+        .range-slider__range {
+            -webkit-appearance: none;
+            height: 10px;
+            border-radius: 5px;
+            background: #d7dcdf;
+            outline: none;
+            padding: 0;
+            margin: 0;
+        }
+        .range-slider__range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #2c3e50;
+            cursor: pointer;
+            -webkit-transition: background .15s ease-in-out;
+            transition: background .15s ease-in-out;
+        }
+        .range-slider__range::-webkit-slider-thumb:hover {
+            background: #1abc9c;
+        }
+        .range-slider__range:active::-webkit-slider-thumb {
+            background: #1abc9c;
+        }
+        .range-slider__range::-moz-range-thumb {
+            height: 20px;
+            border: 0;
+            border-radius: 50%;
+            background: #2c3e50;
+            cursor: pointer;
+            -webkit-transition: background .15s ease-in-out;
+            transition: background .15s ease-in-out;
+        }
+        .range-slider__range::-moz-range-thumb:hover {
+            background: #1abc9c;
+        }
+        .range-slider__range:active::-moz-range-thumb {
+            background: #1abc9c;
+        }
+        .range-slider__value {
+            display: inline-block;
+            position: relative;
+            color: #fff;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 3px;
+            background: #2c3e50;
+            padding: 5px 10px;
+            margin-left: 8px;
+        }
+        .range-slider__value:after {
+            position: absolute;
+            top: 8px;
+            left: -7px;
+            height: 0;
+            border-top: 7px solid transparent;
+            border-right: 7px solid #2c3e50;
+            border-bottom: 7px solid transparent;
+            content: '';
+        }
+    </style>
     
     <body  class="layout-top-nav skin-blue-light">
         
@@ -74,6 +138,11 @@
                         <div id="boxbodyinfo" class="box-body">
 
                             <form action="search_form.php" id="form_search" method="post" name="form_search">
+                                <div class="row range-slider">
+                                    <h2>En toda la ciudad</h2>
+                                    <input class="col-lg-9 col-md-9 col-sm-9 col-xs-9 range-slider__range" type="range" value="0" min="0" max="100">
+                                    <span class="col-lg-2 col-md-2 col-sm-2 col-xs-2 range-slider__value">0Km</span>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-3 col-md-offset-3">
                                         <label>Tipo de Usuario</label>
@@ -219,6 +288,38 @@
         <script src="js/localidad.js" type="text/javascript"></script>
         <script>
             $( document ).ready( function(){
+
+                var rangeSlider = function(){
+
+                    var slider = $('.range-slider'),
+                    range = $('.range-slider__range'),
+                    value = $('.range-slider__value'),
+                    km = 0;
+
+                    slider.each(function(){
+
+                        value.each(function(){
+                            
+                            var value = $( this ).prev().attr( 'value' );
+                            $( this ).html( value + "Km" );
+                        });
+
+                        range.on('input', function(){
+                            
+                            if( this.value < 100 ){
+
+                                km = this.value + "Km";
+                            }
+                            else{
+
+                                km = "Todo México";
+                            }
+                            $( this ).next( value ).html( km );
+                        });
+                    });
+                };
+
+                rangeSlider();
 
                 $( "#type_user" ).change( function(){
 

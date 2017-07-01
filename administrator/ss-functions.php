@@ -2970,14 +2970,14 @@ function mygallery(){
           if ($key['type'] == 1){
            echo '
            <div class="col-md-6">
-             <img class="img-responsive" src="'.str_replace('normal', 'small', $key['ruta']).'" ><br>
+             <img width="128" src="'.str_replace('normal', 'small', $key['ruta']).'" ><br>
              <span></span>
            </div>
            ';
           }else{
            echo '
            <div class="col-md-6">
-             <img class="img-responsive" src="'.str_replace('normal', 'small', $key['ruta']).'" ><br>
+             <img width="400" src="'.str_replace('normal', 'small', $key['ruta']).'" ><br>
              <span></span>
            </div>
            ';
