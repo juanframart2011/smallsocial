@@ -2918,6 +2918,35 @@ function theposttitlepage($permalink){
 }
 
 
+// Mis Videos
+function myvideo(){
+
+    // conexion de base de datos
+    $conexion = Conexion::singleton_conexion();
+
+    $SQL = 'SELECT * FROM '.SSPREFIX.'attachment WHERE usuario = :usuario and ( ext = "mp4" or ext = "avi" or ext = "mpeg" or ext = "mkv" ) ORDER BY id DESC';
+    $stn = $conexion -> prepare($SQL);
+    $stn -> bindParam(':usuario', $_SESSION['ssid'] ,PDO::PARAM_INT);
+    $stn -> execute();
+    $rstl = $stn -> fetchAll();
+    
+    if (!empty($rstl)){
+
+        foreach ($rstl as $key){
+
+            $ruta = str_replace('../', '', $key['ruta']);
+
+            echo '
+            <div class="attachment-block clearfix">
+                <div class="attachment-pushed">
+                    <video class="col-md-12" autobuffer autoloop loop controls>
+                        <source src="'.$ruta.'">
+                    </video>
+                </div>
+            </div>';
+        }
+    }
+}
 
 // Mis imagenes
 function mypicturespage(){
@@ -2952,7 +2981,7 @@ function mypicturespage(){
     }
 }
 
-// Mis imagenes
+// Mis galerías
 function mygallery(){
 
      // conexion de base de datos
@@ -3978,9 +4007,7 @@ function takemylast6postfeed(){
       }
     }
 
-
     $conexion = '';
-
 }
 
 
