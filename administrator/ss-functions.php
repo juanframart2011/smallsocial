@@ -182,11 +182,6 @@ function thenameusertitle($permalink){
 }
 
 
-
-
-
-
-
 // Acceso a los usuarios
 function theloginmemeber($email,$password){
 
@@ -680,7 +675,7 @@ function profileimageposttake($idimage){
     // conexion de base de datos
     $conexion = Conexion::singleton_conexion();
 
-    $SQL = 'SELECT ruta FROM '.SSPREFIX.'imagespost WHERE id = :id';
+    $SQL = 'SELECT * FROM '.SSPREFIX.'imagespost WHERE id = :id';
     $stn = $conexion -> prepare($SQL);
     $stn -> bindParam(':id', $idimage ,PDO::PARAM_INT);
     $stn -> execute();
@@ -693,9 +688,17 @@ function profileimageposttake($idimage){
           list($widthimg, $heightimg) = getimagesize($key['ruta']);
 
           if ($widthimg >= 700){
-             echo '<div class="col-sm-12 text-center"><img style="width:100%; display:block;margin-bottom: 20px;" src="'.$key['ruta'].'"></div>';
+             echo '
+                  <div class="col-sm-12 text-center">
+                    <a class="showthepictureitem" style="cursor:pointer" data-toggle="modal" data-id="'.$key['id'].'" data-target="#myModal">
+                      <img style="width:400px; display:block;" src="'.$key['ruta'].'">
+                    </a>
+                  </div>';
           }else{
-             echo '<div class="col-sm-12 text-center"><img style="margin-bottom: 20px;" src="'.$key['ruta'].'"></div>';
+             echo '<div class="col-sm-12 text-center">
+                  <a class="showthepictureitem" style="cursor:pointer" data-toggle="modal" data-id="'.$key['id'].'" data-target="#myModal">
+                  <img style="width:400px; display:block;" src="'.$key['ruta'].'">
+                  </a></div>';
           }
 
       }
@@ -745,7 +748,7 @@ function portadaimageposttake($idimage){
     // conexion de base de datos
     $conexion = Conexion::singleton_conexion();
 
-    $SQL = 'SELECT ruta FROM '.SSPREFIX.'imagespost WHERE id = :id';
+    $SQL = 'SELECT * FROM '.SSPREFIX.'imagespost WHERE id = :id';
     $stn = $conexion -> prepare($SQL);
     $stn -> bindParam(':id', $idimage ,PDO::PARAM_INT);
     $stn -> execute();
@@ -755,7 +758,10 @@ function portadaimageposttake($idimage){
     }else{
       foreach ($rstl as $key){
 
-        echo '<div class="col-sm-12 text-center"><img style="width:100%; display:block;margin-bottom: 20px;" src="'.$key['ruta'].'"></div>';
+        echo '<div class="col-sm-12 text-center">
+              <a class="showthepictureitem" data-toggle="modal" style="cursor:pointer;" data-id="'.$key['id'].'" data-target="#myModal">
+                <img style="width:400px; display:block;margin-bottom: 20px;" src="'.$key['ruta'].'"></div>
+              </a>';
 
       }
     }
@@ -2959,8 +2965,8 @@ function mypicturespage(){
      $stn -> bindParam(':usuario', $_SESSION['ssid'] ,PDO::PARAM_INT);
      $stn -> execute();
      $rstl = $stn -> fetchAll();
-     if (empty($rstl)){
-     }else{
+     if (!empty($rstl)){
+
        foreach ($rstl as $key){
           
           if ($key['type'] == 1){
@@ -3006,6 +3012,7 @@ function mygallery(){
           }else{
            echo '
            <div class="col-md-6">
+
              <img width="400" src="'.str_replace('normal', 'small', $key['ruta']).'" ><br>
              <span></span>
            </div>
@@ -3564,12 +3571,11 @@ function checkregisterrequired(){
 
 
 
-function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_equipo, $gender, $position, $localidad, $pais, $ciudad, $region){
+function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_equipo, $gender, $position, $localidad, $pais, $ciudad, $region, $lat, $lng){
 
   // conexion de base de datos
   $conexion = Conexion::singleton_conexion();
   
-
   $nombrecheck = preg_match('~^[A-Za-z0-9_]{3,20}$~i', $nombre);
   $apellidocheck = preg_match('~^[A-Za-z0-9_]{3,20}$~i', $apellido);
   $emailcheck = preg_match('~^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.([a-zA-Z]{2,4})$~i', $email);
@@ -3618,7 +3624,7 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         #------------------------------------------------------------
         $rankreginew = 1;
         // Registro de nuevo usuario
-        $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position, localidad, pais, ciudad, region) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position, :localidad, :pais, :ciudad, :region)';
+        $SQLReg = 'INSERT INTO '.SSPREFIX.'usuarios (nombre, apellido, email, password, nacimiento, registro, permalink, rango, activo, type_user, type_equipo, gender, position, localidad, pais, ciudad, region, lat, lng) VALUES (:nombre, :apellido, :email, :password, :nacimiento, :registro, :permalink, :rango, :activo, :type_user, :type_equipo, :gender, :position, :localidad, :pais, :ciudad, :region, :lat, :lng)';
 
         $sentence = $conexion -> prepare($SQLReg);
         $sentence -> bindParam(':nombre',$nombre,PDO::PARAM_STR);
@@ -3639,6 +3645,8 @@ function register($nombre,$apellido,$email,$password,$fecha, $type_user, $type_e
         $sentence -> bindParam(':pais',$pais,PDO::PARAM_STR);
         $sentence -> bindParam(':ciudad',$ciudad,PDO::PARAM_STR);
         $sentence -> bindParam(':region',$region,PDO::PARAM_STR);
+        $sentence -> bindParam(':lat',$lat,PDO::PARAM_STR);
+        $sentence -> bindParam(':lng',$lng,PDO::PARAM_STR);
 
         $sentence -> execute();
         $lastiduser = $conexion -> lastInsertId();
@@ -4144,7 +4152,6 @@ function ajaxloadpstfeed($page){
 
 }
 
-
 function users_list( $sql = null ){
 
     // conexion de base de datos
@@ -4152,7 +4159,7 @@ function users_list( $sql = null ){
 
     if( empty( $sql ) ){
 
-        $SQL = 'SELECT u.nombre, u.permalink, u.apellido, u.email, img.ruta FROM '.SSPREFIX.'usuarios as u LEFT JOIN '.SSPREFIX.'imagespost as img on img.usuario = u.id WHERE u.rango = 1 order by registro';
+        $SQL = 'SELECT u.nombre, u.permalink, u.apellido, u.email, img.ruta FROM '.SSPREFIX.'usuarios as u LEFT JOIN '.SSPREFIX.'imagespost as img on img.usuario = u.id WHERE u.rango = 1 and u.activo = 1 order by registro';
     }
     else{
 

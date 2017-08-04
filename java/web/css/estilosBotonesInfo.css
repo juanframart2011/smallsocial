@@ -1,0 +1,39 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 01-dic-2016, 18:01:40
+    Author     : Orion
+*/
+
+.miInfo{
+    display: none;
+}
+.textareainfo{
+    width:586px;
+    height: 93px;
+    resize:none;
+}
+.textareaexp{
+    width: 586px;
+    height: 101px;
+    resize:none;
+}
+.textareabusqueda{
+    width: 586px;
+    height: 112px;
+    resize:none;
+}
+.miAjuste{
+    display: none;
+}
+
+.misFotosVideos{
+    display: none;
+}
+
+.fotoVideo{
+    display: none;
+}

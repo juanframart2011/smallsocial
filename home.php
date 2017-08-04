@@ -140,6 +140,18 @@
             </div>
         </div>
 
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content" style="margin-top: 150px;">
+      <div id="picturebodymodaldiv" class="modal-body" style="padding: 0px;" >
+        
+        <div class="loader-inner line-scale"><div></div><div></div><div></div><div></div><div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+     <!-- ### MODAL PICTURE ### -->
+
         <div class="modal fade" id="ModalImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -199,6 +211,6 @@
         <script src="js/ss-member-line.js"></script>
         <script type="text/javascript">
             <?php knowtimelinepost(); ?>
-        </script>        
+        </script>
     </body>
 </html>

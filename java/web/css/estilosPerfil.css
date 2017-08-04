@@ -1,0 +1,255 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07-nov-2016, 15:25:22
+    Author     : Orion
+*/
+
+.miPerfil{
+    display: none; 
+    height: 80%;
+}
+.miPerfilAjeno{ 
+    height: 80%;
+}
+
+.parteDerePerfil{
+    background: #286090;
+    position: relative;
+    left: 270px;
+    width: 900px;
+    min-height: 670px;
+    border-radius: 15px 15px 15px 15px;
+}
+.cabeceraperfil{
+
+    background: #23527c;
+    height: 100px;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 10%;
+}
+
+.botonx{
+    float:right;    
+    cursor:pointer;
+    color: #fff;
+    border: 1px solid #AEAEAE;
+    border-radius: 30px;
+    background: #605F61;
+    font-size: 31px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 0px;
+    padding: 11px 3px;      
+}
+
+.botonx:before {
+    content: "×";
+
+}
+.textoCabePerfil{
+    font-weight: bold;
+    font-size: 20px;
+    color:#fff;
+    text-align: center;
+    line-height: 100px;
+}
+
+.contenidoperfil{
+    width: 90%;
+    height: 500px;
+    border: 2px solid black;
+    border-radius: 25px;
+    margin: 0 auto;
+    display: flex;
+    padding: 20px;
+    margin-top: 5px;
+    display: -webkit-flex; /* Safari */
+    -webkit-flex-flow: wrap; /* Safari 6.1+ */
+    flex-flow: wrap;
+}
+
+.menuperfil{
+    width: 25%;
+    height: 100%;
+    background:#286090;
+}
+
+.fotoperfil{
+    width: 90%;
+    height: 200px;
+}
+
+.datosperfil {
+    background: #c0c0c0;
+    width: 75%;
+    display:flex;
+    height: 100%;
+    flex-flow: nowrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btnsobremi, .btninfo, .btnimavideo, .btnajustes{
+    width: 90%;
+    height: 50px;
+    margin-top: 10%;
+    cursor: pointer;
+}
+.title h1 {
+    position: absolute;
+    top: -100px;
+    text-align: center;
+    font-size: 12px;
+}
+.title h2 {
+    position: absolute;
+    top: -200px;
+    text-align: center;
+    font-size: 8px;
+}
+.title h3 {
+    position: absolute;
+    top: -300px;
+    text-align: center;
+    font-size: 8px;
+}
+.usuariodatos {
+    width: 62%;
+    height: 80px;
+    background: rgba(255, 255, 0, 0.3);
+    margin-top: 25px;
+}
+.contact_details {
+    display: block;
+    float: right;
+    width: 60%;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px 2% 10px 0;
+    margin-top:40px;
+}
+.bcard {
+    border: solid 1px #999;
+    border-bottom: 2px solid #999;
+    background: rgba(255, 255, 255, 0.5);
+    position: relative;
+    display: inline-block;
+    width: 65%;
+    height: 50%;
+    -webkit-box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.3);
+    border-top: 0;
+    overflow:hidden;
+    top:50%;
+    transform: translateY(-50%);
+}
+
+.bcard:hover > header {
+    margin-left:-260px;
+}
+.bcard:hover > .contact_details {
+    margin-right:-260px;
+}
+.bcard:hover > footer {
+    top:150px;
+}
+.bcard:hover > footer a {
+    font-size: 36px;
+}
+.bcard:hover > .title h1 {
+    top: 24px;
+    font-size: 24px;
+}
+.bcard:hover > .title h2 {
+    top: 66px;
+    font-size: 14px;
+}
+.bcard:hover > .title h3 {
+    top: 80px;
+    font-size: 10px;
+}
+h1, h2,h3 {
+    float: left;
+    width: 90%;
+    text-align: left;
+    margin: 15px 5% 0 5%;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333;
+    text-shadow: 1px 1px 1px #FFFFFF;
+}
+h2 {
+    font-size: 14px;
+    margin-top: 3px;
+    color: #444;
+}
+.border-top {
+    float: left;
+    border-top: solid 3px;
+    margin: 0;
+}
+.gray1 {
+    border-color: #333;
+    width: 15%;
+}
+.gray2 {
+    border-color: #666;
+    width: 23%;
+}
+.gray3 {
+    border-color: #999;
+    width: 62%;
+}
+p {
+    text-align: right;
+    margin: 0;
+    font-weight: 100;
+    color: #444;
+    text-shadow: 1px 1px 1px #FFFFFF;
+}
+.mail {
+    margin-top: 0;
+}
+.interactuausuario {
+    position: absolute;
+    width: 80%;
+    text-align: center;
+    margin: 0 10%;
+    display: flex;
+    top: 250px;
+}
+.interactuausuario a {
+    bottom: 0;
+    margin: 0 auto;
+    float: left;
+    text-align: center;
+    display: block;
+    font-size: 10px;
+    width: 20%;
+}
+.fa-comments:hover,.fa-unlock:hover, .fa-star-o:hover,
+.fa-star:hover, .fa-lock:hover, .fa-trophy:hover{
+    color:#4099FF;
+}
+.btnesguardcancel{
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    margin-top: 5%;
+}
+.botonguardarperfil, .botoncancelarperfil {
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 1.25em;
+    background: #34d939;
+    padding: 10px 20px 10px 20px;
+    border: solid #208a51 2px;
+    text-decoration: none;
+    display: inline-block;
+    width: 30%;
+    cursor: pointer;
+}

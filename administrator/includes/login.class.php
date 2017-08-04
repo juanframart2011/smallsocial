@@ -41,16 +41,22 @@ class Login
 			$query->bindParam(1,$email);
 			$query->bindParam(2,$crypt);
 			$query->execute();
-			$this->dbh = null;
+			#$this->dbh = null;
 
 			//si existe el usuario
 			if($query->rowCount() == 1)
 			{
 				 
-				 $fila  = $query->fetch();
-				 $_SESSION['ssid'] = $fila['id'];
-				 $_SESSION['ssrango'] = $fila['rango'];	
+				$fila  = $query->fetch();
+				$_SESSION['ssid'] = $fila['id'];
+				$_SESSION['ssrango'] = $fila['rango'];	
 
+				$update_sql = "UPDATE ".SSPREFIX."usuarios set activo = 1 WHERE email = ? AND password = ? ";
+				$update_sql = $this->dbh->prepare( $update_sql );
+				$update_sql->bindParam(1,$email);
+				$update_sql->bindParam(2,$crypt);
+				$update_sql->execute();
+				#$this->dbh = null;
                  
 				 return TRUE;
 	

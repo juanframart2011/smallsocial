@@ -1,4 +1,9 @@
 <?php 
+/*
+ALTER TABLE `smallsocial`.`jhss_usuarios` 
+ADD COLUMN `lat` TEXT NULL AFTER `region`,
+ADD COLUMN `lng` TEXT NULL AFTER `lat`;
+*/
     require_once 'administrator/ss-functions.php';
     checklogin();
     if (isset($_POST['email'])){
@@ -26,7 +31,7 @@
             $position = '';
         }
 
-       register($_POST['nombre'],$_POST['apellido'],$_POST['email'],$_POST['passwordtwo'],$fecha, $type_user, $type_equipo, $gender, $position, $_POST["localidad"], $_POST["pais"], $_POST["ciudad"], $_POST["region"]);
+       register($_POST['nombre'],$_POST['apellido'],$_POST['email'],$_POST['passwordtwo'],$fecha, $type_user, $type_equipo, $gender, $position, $_POST["localidad"], $_POST["pais"], $_POST["ciudad"], $_POST["region"], $_POST["lat"], $_POST["lng"]);
     }
     $register_menu = true;
     $title = 'Registro';
@@ -192,6 +197,8 @@
                                 <input id="ciudad" name="ciudad" type="hidden">
                                 <input id="pais" name="pais" type="hidden">
                                 <input id="region" name="region" type="hidden">
+                                <input id="lat" name="lat" type="hidden">
+                                <input id="lng" name="lng" type="hidden">
 
                                 <div class="form-group has-feedback gender">
                                     <label>Genero</label>

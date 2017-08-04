@@ -1,6 +1,6 @@
 function init() {
 
-    var input = document.getElementById('registro-localidad');
+    var input = document.getElementById( 'registro-localidad' );
     var opts = {
         types: ['(cities)']
     };
@@ -14,9 +14,16 @@ function init() {
         var ciudad = "";
         var pais = "";
         var region = "";
+        var lat = "";
+        var lng = "";
+
+        lat = result.geometry.location.lat();
+        lng = result.geometry.location.lng();
 
         for (var i = 0; i < result.address_components.length; i++) {
+
             var addressObj = result.address_components[i];
+
             for (var j = 0; j < addressObj.types.length; j++) {
                 //console.log(addressObj.types[j]);
                 //Si es una localidad
@@ -37,14 +44,18 @@ function init() {
         }
 
         // Guardamos localmente el valor de la localidad
-        localStorage.setItem("localidad", localidad);
-        localStorage.setItem("ciudad", ciudad);
-        localStorage.setItem("pais", pais);
-        localStorage.setItem("region", region);
+        localStorage.setItem( "localidad", localidad );
+        localStorage.setItem( "ciudad", ciudad );
+        localStorage.setItem( "pais", pais );
+        localStorage.setItem( "region", region );
+        localStorage.setItem( "lat", lat );
+        localStorage.setItem( "lng", lng );
 
         $( "#ciudad" ).val( ciudad );
         $( "#pais" ).val( pais );
         $( "#region" ).val( region );
+        $( "#lat" ).val( lat );
+        $( "#lng" ).val( lng );
 
         document.getElementById('registro-localidad').readOnly = true;
         document.getElementById('btnLocalidad').style.display = 'block';
